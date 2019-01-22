@@ -11,14 +11,14 @@ public class MatrixOps implements Runnable
 
     public MatrixOps(ArrayList<ArrayList<Integer>> rowI, ArrayList<ArrayList<Integer>> matrixJ)
     {
-        System.out.println("Creating Thread: " + Thread.currentThread() + "\n");
+        // System.out.println("Creating Thread: " + Thread.currentThread() + "\n");
         this.rowI = rowI;
         this.matrixJ = matrixJ;
     }
 
     public void start ()
     {
-        System.out.println("Starting Thread: ");
+        // System.out.println("Starting Thread: ");
         if (t == null) {
             t = new Thread (this);
             t.start ();
@@ -32,7 +32,7 @@ public class MatrixOps implements Runnable
 
     public void run()
     {
-
+        System.out.println("Starting Thread");
         resultMat = rowOps();
     }
 

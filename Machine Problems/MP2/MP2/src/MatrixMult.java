@@ -58,7 +58,7 @@ public class MatrixMult
             if(runMultThread)
             {
                 ArrayList<ArrayList<ArrayList<Integer>>> argMatrix = argMatrixI(mat1);
-                print3DMatrix(argMatrix);
+                // print3DMatrix(argMatrix);
 
                 System.out.println("Multithreaded Matrix Operations");
                 resultMat = matrixOps(argMatrix, mat2);
@@ -70,7 +70,7 @@ public class MatrixMult
             }
         }
 
-        System.out.println("Result Matrix: ");
+        System.out.println("\nResult Matrix: ");
         printMatrix(resultMat);
 
         // TODO: Used 3d matrix to send corresponding rows to the threads
@@ -147,33 +147,38 @@ public class MatrixMult
     {
         ArrayList<ArrayList<Integer>> argMat1 = new ArrayList<ArrayList<Integer>>();
         argMat1.add(mat1.get(0));
-        System.out.println("First Arg: ");
-        printMatrix(argMat1);
+        // System.out.println("First Arg: ");
+        // printMatrix(argMat1);
 
         ArrayList<ArrayList<Integer>> argMat2 = new ArrayList<ArrayList<Integer>>();
         argMat2.add(mat1.get(1));
-        System.out.println("Second Arg: ");
-        printMatrix(argMat2);
+        // System.out.println("Second Arg: ");
+        // printMatrix(argMat2);
 
         ArrayList<ArrayList<Integer>> argMat3 = new ArrayList<ArrayList<Integer>>();
         argMat3.add(mat1.get(2));
-        System.out.println("Third Arg: ");
-        printMatrix(argMat3);
+        // System.out.println("Third Arg: ");
+        // printMatrix(argMat3);
 
         try
         {
-            MatrixOps matrixOps1 = new MatrixOps(argMat1, mat2);
-            MatrixOps matrixOps2 = new MatrixOps(argMat2, mat2);
-            MatrixOps matrixOps3 = new MatrixOps(argMat3, mat2);
+            MatrixOps matOps1 = new MatrixOps(argMat1, mat2);
+            MatrixOps matOps2 = new MatrixOps(argMat2, mat2);
+            MatrixOps matOps3 = new MatrixOps(argMat3, mat2);
+
+            Thread matrixOps1 = new Thread(matOps1);
+            Thread matrixOps2 = new Thread(matOps2);
+            Thread matrixOps3 = new Thread(matOps3);
 
             matrixOps1.start();
             matrixOps2.start();
             matrixOps3.start();
 
-            Thread.sleep(1000);
+            matrixOps1.join();
+            matrixOps2.join();
+            matrixOps3.join();
 
-            return miniStitchTogether(matrixOps1.getResultMat(), matrixOps2.getResultMat(), matrixOps3.getResultMat());
-
+            return miniStitchTogether(matOps1.getResultMat(), matOps2.getResultMat(), matOps3.getResultMat());
         }
         catch (Exception e)
         {
@@ -184,8 +189,52 @@ public class MatrixMult
         return null;
     }
 
-
     public static ArrayList<ArrayList<Integer>> matrixOps(ArrayList<ArrayList<ArrayList<Integer>>> mat1,
+                                                          ArrayList<ArrayList<Integer>> mat2)
+    {
+        ArrayList<MatrixOps> matOps = new ArrayList<MatrixOps>();
+        ArrayList<Thread> threads = new ArrayList<Thread>();
+
+        try
+        {
+            // Create MatrixOps objects
+            for(int i = 0; i < 5; i++)
+            {
+                matOps.add(new MatrixOps(mat1.get(i), mat2));
+            }
+
+            // Create threads
+            for(int i = 0; i < 5; i++)
+            {
+                threads.add(new Thread(matOps.get(i)));
+            }
+
+            // Start Threads
+            for(int i = 0; i < 5; i++)
+            {
+                threads.get(i).start();
+            }
+
+            // Join Threads
+            for(int i = 0; i < 5; i++)
+            {
+                threads.get(i).join();
+            }
+
+            // piece together all of the matrices that were returned back into one matrix
+            return stitchTogether(matOps.get(0).getResultMat(), matOps.get(1).getResultMat(), matOps.get(2).getResultMat(),
+                    matOps.get(3).getResultMat(), matOps.get(4).getResultMat());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("ERROR: " + e.getMessage() + "\n");
+        }
+
+        return null;
+    }
+
+    /* public static ArrayList<ArrayList<Integer>> matrixOps(ArrayList<ArrayList<ArrayList<Integer>>> mat1,
                                                           ArrayList<ArrayList<Integer>> mat2)
     {
         ArrayList<MatrixOps> matOps = new ArrayList<>();
@@ -216,7 +265,7 @@ public class MatrixMult
         }
 
         return null;
-    }
+    } */
 
     public static ArrayList<ArrayList<Integer>> miniStitchTogether(ArrayList<ArrayList<Integer>> mat1, ArrayList<ArrayList<Integer>> mat2,
                                                                ArrayList<ArrayList<Integer>> mat3)
@@ -392,6 +441,6 @@ public class MatrixMult
     public static int genRandNum()
     {
         // 100 is the maximum and the 1 is our minimum.
-        return (int)(Math.random() * 5 + 1);
+        return (int)(Math.random() * 9 + 1);
     }
 }

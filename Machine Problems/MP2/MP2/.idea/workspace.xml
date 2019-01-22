@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9110639a-b95e-4300-a937-0a28c5774390" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MatrixMult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MatrixMult.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MatrixOps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MatrixOps.java" afterDir="false" />
     </list>
@@ -14,11 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/MatrixOps.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="6" selection-start-line="3" selection-end-line="3" selection-end-column="6" />
+            <state relative-caret-position="261">
+              <caret line="35" column="29" lean-forward="true" selection-start-line="35" selection-start-column="29" selection-end-line="35" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -26,16 +27,15 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MatrixMult.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="769">
-              <caret line="154" column="34" selection-start-line="154" selection-start-column="34" selection-end-line="154" selection-end-column="34" />
+            <state relative-caret-position="891">
+              <caret line="223" column="89" selection-start-line="223" selection-start-column="89" selection-end-line="223" selection-end-column="89" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3778#3798#0" expanded="true" />
-                <element signature="e#4707#4727#0" expanded="true" />
-                <element signature="e#3958#3978#0" expanded="true" />
+                <element signature="e#6194#6205#0" expanded="true" />
+                <element signature="e#6249#6257#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -67,12 +67,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/MatrixOps.java" />
         <option value="$PROJECT_DIR$/src/MatrixMult.java" />
+        <option value="$PROJECT_DIR$/src/MatrixOps.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="4" />
     <option name="y" value="23" />
     <option name="width" value="1436" />
@@ -84,6 +84,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -100,8 +102,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -166,7 +166,7 @@
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.40509555" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.40509555" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -184,25 +184,24 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/MatrixOps.java">
+    <entry file="file://$PROJECT_DIR$/src/MatrixMult.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="6" selection-start-line="3" selection-end-line="3" selection-end-column="6" />
+        <state relative-caret-position="891">
+          <caret line="223" column="89" selection-start-line="223" selection-start-column="89" selection-end-line="223" selection-end-column="89" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#6194#6205#0" expanded="true" />
+            <element signature="e#6249#6257#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MatrixMult.java">
+    <entry file="file://$PROJECT_DIR$/src/MatrixOps.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="769">
-          <caret line="154" column="34" selection-start-line="154" selection-start-column="34" selection-end-line="154" selection-end-column="34" />
+        <state relative-caret-position="261">
+          <caret line="35" column="29" lean-forward="true" selection-start-line="35" selection-start-column="29" selection-end-line="35" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3778#3798#0" expanded="true" />
-            <element signature="e#4707#4727#0" expanded="true" />
-            <element signature="e#3958#3978#0" expanded="true" />
           </folding>
         </state>
       </provider>
