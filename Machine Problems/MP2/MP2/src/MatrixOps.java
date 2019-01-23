@@ -59,8 +59,6 @@ public class MatrixOps implements Runnable
         }
 
         return newMat;
-
-        //TODO: figure out how to print the new rows to verify it works
     }
 
     // Multiplies a row by a column

@@ -441,6 +441,6 @@ public class MatrixMult
     public static int genRandNum()
     {
         // 100 is the maximum and the 1 is our minimum.
-        return (int)(Math.random() * 9 + 1);
+        return (int)(Math.random() * 5 + 1);
     }
 }
