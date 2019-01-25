@@ -2,14 +2,14 @@ import java.io.*;
 import java.net.*;
 import java.lang.*;
 
-public class ServerThread extends Thread
+public class ServerThread implements Runnable
 {
     private Socket sock;
     private String sendMessage;
 
     public ServerThread(Socket clientSocket, String sendMessage)
     {
-        super("ServerThread");
+        // super("ServerThread");
         this.sock = clientSocket;
         this.sendMessage = sendMessage;
     }

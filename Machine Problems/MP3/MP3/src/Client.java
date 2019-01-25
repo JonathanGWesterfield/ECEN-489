@@ -38,11 +38,13 @@ public class Client
     {
         System.out.println("Starting Client!");
         try (
+                // create socket, reader from server and writer to server
                 Socket sock = new Socket(hostName, portNumber);
                 PrintWriter out = new PrintWriter(sock.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
         )
         {
+
             Scanner keyboard = new Scanner(System.in);
             String fromServer;
             String fromUser;
@@ -58,6 +60,8 @@ public class Client
 
                 System.out.println("Client Read: " + fromServer);
 
+                // read from keyboard to send a user input message back to
+                // server after initial response
                 System.out.print("Send a message back: ");
                 fromUser = keyboard.next();
                 if (fromUser != null)
