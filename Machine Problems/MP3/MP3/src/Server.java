@@ -1,20 +1,19 @@
 import java.lang.*;
 import java.io.*;
+import java.rmi.ServerError;
 import java.util.*;
 import java.net.*;
 
 public class Server
 {
     private ServerSocket servSock;
-    private PrintWriter writer;
-    private BufferedReader reader;
 
     private ArrayList<PrintWriter> clientOutputStreams;
 
     private int maxNumClients;
     private int numClients;
     private int portNum;
-    private String message;
+    private String sendMessage;
 
     public static void main(String[] args)
     {
@@ -26,85 +25,54 @@ public class Server
 
         int portNum = Integer.parseInt(args[0]);
         int maxNumClients = Integer.parseInt(args[1]);
-        String message = args[2];
+        String sendMessage = args[2];
+
+        Server server = new Server(portNum, maxNumClients, sendMessage);
+        server.startServer();
 
     }
 
-    public void Server(int portNum, int maxNumClients, String message)
+    public Server()
+    {
+        //Empty Default constructor
+    }
+
+    public Server(int portNum, int maxNumClients, String sendMessage)
     {
         this.portNum = portNum;
         this.maxNumClients = maxNumClients;
-        this.message = message;
+        this.sendMessage = sendMessage;
         this.numClients = 0;
     }
 
     public void startServer()
     {
+        System.out.println("Starting Server\n");
         try
         {
             this.servSock = new ServerSocket(this.portNum);
-            while (this.numClients <= this.maxNumClients)
+            while (this.numClients < this.maxNumClients)
             {
                 Socket clientSocket = this.servSock.accept();
-                this.writer = new PrintWriter(clientSocket.getOutputStream(), true);
-                this.reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-                this.clientOutputStreams.add(writer);
-
-                Thread t = new Thread(new ClientHandler(clientSocket));
+                Thread t = new Thread(new ServerThread(clientSocket, sendMessage));
                 t.start();
 
                 System.out.println("Got a connection");
                 this.numClients += 1;
+
             }
 
             System.out.println("\nExceeded Max Number of Connections!!!");
             System.out.println("Max Number of Connections Allowed: " + this.maxNumClients);
             System.out.println("\nExiting!");
+            System.exit(-1);
         }
         catch (IOException e)
         {
+            System.err.println("Could not listen on port " + this.portNum);
             System.err.println("\nERROR: " + e.getMessage());
             e.printStackTrace();
-        }
-    }
-
-    public class ClientHandler implements Runnable
-    {
-        BufferedReader reader;
-        Socket sock;
-
-        public ClientHandler(Socket clientSocket)
-        {
-            try
-            {
-                this.sock = clientSocket;
-                InputStreamReader isReader = new InputStreamReader(sock.getInputStream());
-                this.reader = new BufferedReader(isReader);
-            }
-            catch(Exception e)
-            {
-                System.err.println("\nERROR: " + e.getMessage());
-                e.printStackTrace();
-            }
-        }
-
-        public void run()
-        {
-            String message;
-
-            try
-            {
-                while((message = this.reader.readLine()) != null)
-                {
-                    System.out.println("Server Read: " + message);
-                }
-            }
-            catch (IOException e)
-            {
-                System.err.println("\nERROR: " + e.getMessage());
-                e.printStackTrace();
-            }
         }
     }
 }

@@ -7,13 +7,9 @@ import java.lang.*;
 
 public class Client
 {
-    BufferedReader reader;
-    BufferedWriter writer;
-    OutputStreamWriter streamWriter;
-    Socket sock;
-    String hostName;
-    int portNumber;
-    String message;
+    private String hostName;
+    private int portNumber;
+    private String message;
 
     public static void main(String[] args)
     {
@@ -41,66 +37,45 @@ public class Client
     public void startClient()
     {
         System.out.println("Starting Client!");
-        setUpNetworking();
-        sendMessage();
-
-        Thread readerThread = new Thread(new IncomingReader());
-        readerThread.start();
-    }
-
-    public void setUpNetworking()
-    {
-        try
+        try (
+                Socket sock = new Socket(hostName, portNumber);
+                PrintWriter out = new PrintWriter(sock.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+        )
         {
-            this.sock = new Socket(this.hostName, this.portNumber);
-            InputStreamReader streamReader = new InputStreamReader(this.sock.getInputStream());
-            this.reader = new BufferedReader(streamReader);
-            this.streamWriter = new OutputStreamWriter(this.sock.getOutputStream());
-            this.writer = new BufferedWriter(this.streamWriter);
+            Scanner keyboard = new Scanner(System.in);
+            String fromServer;
+            String fromUser;
 
-            System.out.println("Network Connection Established\n");
-        }
-        catch (IOException e)
-        {
-            System.err.println("\nERROR: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
+            out.println(message);
 
-    public void sendMessage()
-    {
-        try
-        {
-            writer.write(message);
-            System.out.println("Message Sent!");
-            writer.flush();
-        }
-        catch (IOException e)
-        {
-            System.err.println("\nERROR: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-    }
-
-    public class IncomingReader implements Runnable
-    {
-        public void run()
-        {
-            String message;
-            try
+            // MUST SEND MESSAGE WITH AN ENDLINE '\n' CHARACTER OR ELSE THE WRITER
+            // NEVER CLOSES AND THE SERVER HANGS AND DEADLOCKS
+            while ((fromServer = in.readLine()) != null)
             {
-                while((message = reader.readLine()) != null)
+                if (fromServer.equalsIgnoreCase("bye"))
+                    break;
+
+                System.out.println("Client Read: " + fromServer);
+
+                System.out.print("Send a message back: ");
+                fromUser = keyboard.next();
+                if (fromUser != null)
                 {
-                    System.out.println("Read: " + message);
+                    System.out.println("Client Sends: " + fromUser );
+                    out.println(fromUser);
                 }
             }
-            catch (Exception e)
-            {
-                System.err.println("\nERROR: " + e.getMessage());
-                e.printStackTrace();
-            }
+        }
+        catch (UnknownHostException e)
+        {
+            System.err.println("Don't know about host " + hostName);
+            System.exit(1);
+        }
+        catch (IOException e)
+        {
+            System.err.println("Couldn't get I/O for the connection to " + hostName);
+            System.exit(1);
         }
     }
-
 }
