@@ -63,7 +63,7 @@ public class Client
                 // read from keyboard to send a user input message back to
                 // server after initial response
                 System.out.print("Send a message back: ");
-                fromUser = keyboard.next();
+                fromUser = keyboard.nextLine();
                 if (fromUser != null)
                 {
                     System.out.println("Client Sends: " + fromUser );
