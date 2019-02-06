@@ -51,7 +51,7 @@ public class Server
         try
         {
             this.servSock = new ServerSocket(this.portNum);
-            while (this.numClients < this.maxNumClients)
+            while (this.numClients <= this.maxNumClients)
             {
                 Socket clientSocket = this.servSock.accept();
 
