@@ -32,7 +32,7 @@
         tools:layout_editor_absoluteY="125dp" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/songChoices"
         android:layout_width="369dp"
         android:layout_height="142dp"
         android:layout_marginStart="8dp"
@@ -100,11 +100,11 @@
         app:layout_constraintVertical_bias="0.98">
 
         <ImageButton
-            android:id="@+id/prevBtn"
+            android:id="@+id/pauseBtn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_media_previous" />
+            app:srcCompat="@android:drawable/ic_media_pause" />
 
         <ImageButton
             android:id="@+id/pausePlayBtn"
@@ -113,12 +113,6 @@
             android:layout_weight="1"
             app:srcCompat="@android:drawable/ic_media_play" />
 
-        <ImageButton
-            android:id="@+id/fastForBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_media_next" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
