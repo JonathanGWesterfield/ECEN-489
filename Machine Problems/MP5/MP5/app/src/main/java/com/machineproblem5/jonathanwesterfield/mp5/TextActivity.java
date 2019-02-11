@@ -8,12 +8,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.os.*;
 import java.io.*;
+import java.util.stream.*;
 import java.util.*;
+import java.nio.file.*;
 
 public class TextActivity extends AppCompatActivity {
 
     File dir;
     ArrayList<String> fileList;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -21,50 +24,50 @@ public class TextActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text);
         this.dir = android.os.Environment.getExternalStorageDirectory();
+        this.textView = (TextView) findViewById(R.id.textActTextView);
 
         //contains list of all files ending with
         this.fileList = new ArrayList<String>();
-        getFilesList(this.dir);
+        listAssetFiles(this.dir.getAbsolutePath());
         printFileList();
 
     }
     
     public void printFileList()
     {
+        System.out.println("Number of Files in Storage: " + this.fileList.size());
+        this.textView.setText("Number of Files in Storage: " + this.fileList.size());
         System.out.println("Files in External Storage:");
-        if(!(fileList.size() > 0))
+
+        for (int i = 0; i < fileList.size(); i++)
         {
-            for (String file: this.fileList)
-            {
-                System.out.println("File: " + file);
-            }
-            return;
+            System.out.println("File: " + fileList.get(i));
+            this.textView.append(fileList.get(i) + ", ");
         }
-        System.out.println("No Files Found!");
 
     }
 
-    public void getFilesList(File dir) {
-        File listFile[] = dir.listFiles();
+    private boolean listAssetFiles(String path) {
 
-        if (listFile != null)
-        {
-            for (int i = 0; i < listFile.length; i++)
-            {
-
-                if (listFile[i].isDirectory())
-                {
-                    // if its a directory need to get the files under that directory
-                    getFilesList(listFile[i]);
-                }
-                else
-                {
-                    // add path of  files to your arraylist for later use
-
-                    //Do what ever u want
-                    fileList.add(listFile[i].getAbsolutePath());
+        String [] list;
+        try {
+            list = getAssets().list(path);
+            if (list.length > 0) {
+                // This is a folder
+                for (String file : list) {
+                    if (!listAssetFiles(path + "/" + file))
+                        return false;
+                    else {
+                        // This is a file
+                        // TODO: add file name to an array list
+                    }
                 }
             }
+        } catch (IOException e) {
+            return false;
         }
+
+        return true;
     }
+
 }

@@ -58,8 +58,7 @@ public class MainActivity extends AppCompatActivity {
     {
         /* Checks if external storage is available to at least read */
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state))
+        if (Environment.MEDIA_MOUNTED.equals(state))
         {
             textView.setText("External Storage Found");
             return true;
