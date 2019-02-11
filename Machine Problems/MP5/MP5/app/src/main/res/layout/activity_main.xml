@@ -24,18 +24,27 @@
             android:id="@+id/textbtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onTextBtnClick"
             android:text="Text" />
 
         <Button
             android:id="@+id/imgBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onImageBtnClick"
             android:text="Images" />
 
         <Button
             android:id="@+id/mediaBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onMediaBtnClick"
             android:text="Media" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jonathan Westerfield" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

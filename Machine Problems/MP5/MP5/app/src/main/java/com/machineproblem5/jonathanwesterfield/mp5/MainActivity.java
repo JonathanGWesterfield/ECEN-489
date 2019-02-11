@@ -12,25 +12,46 @@ import android.os.*;
 
 public class MainActivity extends AppCompatActivity {
 
+    TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.textView = (TextView) findViewById(R.id.textView);
     }
 
-    public boolean onTextBtnClick(View view)
+    public void onTextBtnClick(View view)
     {
-
+        if(!checkExtStorage())
+        {
+            System.err.println("External Storage could not be accessed\nExiting");
+            System.exit(-1);
+        }
+        Intent intent = new Intent(this, TextActivity.class);
+        startActivity(intent);
     }
 
-    public boolean onMediaBtnClick(View view)
+    public void onImageBtnClick(View view)
     {
-
+        if(!checkExtStorage())
+        {
+            System.err.println("External Storage could not be accessed\nExiting");
+            System.exit(-1);
+        }
+        Intent intent = new Intent(this, ImageActivity.class);
+        startActivity(intent);
     }
 
-    public boolean onImageBtnClick(View view)
+    public void onMediaBtnClick(View view)
     {
-
+        if(!checkExtStorage())
+        {
+            System.err.println("External Storage could not be accessed\nExiting");
+            System.exit(-1);
+        }
+        Intent intent = new Intent(this, MediaActivity.class);
+        startActivity(intent);
     }
 
     public boolean checkExtStorage()
@@ -40,8 +61,11 @@ public class MainActivity extends AppCompatActivity {
         if (Environment.MEDIA_MOUNTED.equals(state) ||
                 Environment.MEDIA_MOUNTED_READ_ONLY.equals(state))
         {
+            textView.setText("External Storage Found");
             return true;
         }
+
+        textView.setText("ERROR: Cannot Read From External Storage!!");
         return false;
     }
 }
