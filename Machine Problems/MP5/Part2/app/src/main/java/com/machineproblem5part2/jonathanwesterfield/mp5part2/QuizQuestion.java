@@ -8,21 +8,31 @@ import java.util.ArrayList;
 public class QuizQuestion implements Serializable
 {
     private String topic;
+    private String question;
     private String correctAnswer;
     private ArrayList<String> answerChoices;
     private boolean hasBeenUsed;
 
-    public QuizQuestion(String topic, String correctAnswer, ArrayList<String> answerChoices)
+    public QuizQuestion(ArrayList<String> questionInfo)
     {
-        this.topic = topic;
-        this.correctAnswer = correctAnswer;
-        this.answerChoices = answerChoices;
+        this.topic = questionInfo.get(0);
+        this.question = questionInfo.get(1);
+        this.answerChoices.add(questionInfo.get(2));
+        this.answerChoices.add(questionInfo.get(3));
+        this.answerChoices.add(questionInfo.get(4));
+        this.answerChoices.add(questionInfo.get(5));
+        this.correctAnswer = questionInfo.get(6);
         this.hasBeenUsed = false;
     }
 
     public String getTopic()
     {
         return this.topic;
+    }
+
+    public String getQuestion()
+    {
+        return this.question;
     }
 
     public String getCorrectAnswer()

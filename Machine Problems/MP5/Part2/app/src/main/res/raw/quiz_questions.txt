@@ -5,7 +5,6 @@ Muay Thai
 Karate
 Goju Ryu
 Muay Thai
-
 MartialArts
 Which of the following is a wooden practice sword?
 Shinai
@@ -13,7 +12,6 @@ Boken
 Escrima Stick
 Hanbo
 Boken
-
 MartialArts
 Which of the following systems did NOT develop from JuJitsu?
 Judo
@@ -21,7 +19,6 @@ Aikido
 Aikijutsu
 Karate
 Karate
-
 MartialArts
 Who is generally regarded as the best Muay Thai kickboxer of all time?
 Saekson Janjira
@@ -29,7 +26,6 @@ Buakaw Benchamek
 Samart Payakaroon
 Saenchai Sor Kingstar
 Samart Payakaroon
-
 American History
 In what year was the Declaration of Independence signed?
 1778
@@ -37,7 +33,6 @@ In what year was the Declaration of Independence signed?
 1812
 1742
 1776
-
 American History
 What town did Daniel Boone found?
 Boonesborough
@@ -45,7 +40,6 @@ Boonestown
 Boonesville
 Boonestar
 Boonesborough
-
 American History
 Who did Andrew Carnegie sell his empire too?
 John D Rockefeller
@@ -53,7 +47,6 @@ JP Morgan
 Cornelius Vanderbilt
 Kinder Morgan
 JP Morgan
-
 American History
 What was the bloodiest battle of the Civil War?
 Antietam
@@ -61,7 +54,6 @@ Shiloh
 Bull Run
 Gettysburg
 Gettysburg
-
 Computer Science
 Which of these is a segment of a track in a mass storage system?
 Sector
@@ -69,7 +61,6 @@ Pixel
 Flip Flop
 Bitmap
 Sector
-
 Computer Science
 What is the number system based on the number 16?
 Hexadecimal
@@ -77,7 +68,6 @@ Decimal
 Binary
 Octal
 Hexadecimal
-
 Computer Science
 Who is credited for creating the C programming Language?
 Dennis Ritchie
@@ -85,7 +75,6 @@ Bjarne Stroustrup
 Riccardo Bettati
 Edsger Dijkstra
 Dennis Ritchi
-
 Computer Science
 Who is credited for creating the Linux operating system?
 Edsger Dijkstra
