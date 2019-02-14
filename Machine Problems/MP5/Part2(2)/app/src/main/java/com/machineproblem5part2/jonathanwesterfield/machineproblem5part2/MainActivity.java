@@ -166,6 +166,27 @@ public class MainActivity extends AppCompatActivity
         startActivityForResult(showQuestion, 1);
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        int returnedScore = 0;
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1)
+        {
+            if(resultCode == RESULT_OK)
+            {
+                returnedScore = data.getIntExtra("updated_score", 0);
+                updateScore(returnedScore);
+            }
+        }
+    }
+
+    public void updateScore(int updatedScore)
+    {
+        this.score = updatedScore;
+        this.scoreView.setText("Score: " + this.score);
+    }
+
     public void showNoMoreQuestionsAlert(View view)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

@@ -74,7 +74,7 @@ Dennis Ritchie
 Bjarne Stroustrup
 Riccardo Bettati
 Edsger Dijkstra
-Dennis Ritchi
+Dennis Ritchie
 Computer Science
 Who is credited for creating the Linux operating system?
 Edsger Dijkstra

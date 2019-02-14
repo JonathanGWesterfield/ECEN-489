@@ -1,5 +1,6 @@
 package com.machineproblem5part2.jonathanwesterfield.machineproblem5part2;
 
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
@@ -26,9 +27,11 @@ public class QuestionActivity extends AppCompatActivity
     EditText answerBox;
 
     ArrayList<String> answerChoices;
+    String correctAnswer;
 
     Button submitBtn;
     QuizQuestion questionObj;
+    int userAnswer;
     int currScore;
 
     @Override
@@ -43,6 +46,8 @@ public class QuestionActivity extends AppCompatActivity
 
         this.answerChoices = new ArrayList<String>();
         pullAnswerChoices();
+
+        this.correctAnswer = this.questionObj.getCorrectAnswer();
 
         initializeInterfaces();
         populateViews();
@@ -69,29 +74,59 @@ public class QuestionActivity extends AppCompatActivity
     public void populateViews()
     {
         this.questionView.setText(questionObj.getQuestion());
-        this.choiceAView.setText(this.answerChoices.get(0));
-        this.choiceBView.setText(this.answerChoices.get(1));
-        this.choiceCView.setText(this.answerChoices.get(2));
-        this.choiceDView.setText(this.answerChoices.get(3));
+        this.choiceAView.setText("A. " + this.answerChoices.get(0));
+        this.choiceBView.setText("B. " + this.answerChoices.get(1));
+        this.choiceCView.setText("C. " + this.answerChoices.get(2));
+        this.choiceDView.setText("D. " + this.answerChoices.get(3));
     }
 
     public void checkAnswer(View view)
     {
-        String userAnswer = this.answerBox.getText().toString();
+        String answer = this.answerBox.getText().toString();
 
         // Sanitize the inputs
-        userAnswer = userAnswer.trim();
-        userAnswer = userAnswer.replaceAll("[-+.^:,\n\t\r]","");
+        answer = answer.trim();
+        answer = answer.replaceAll("[-+.^:,\n\t\r]","");
+        System.out.println("User Answer: " + answer);
 
-        System.out.println("User Answer: " + userAnswer);
+        translateAnswer(view, answer);
 
-        if(!userAnswer.equalsIgnoreCase("A") && !userAnswer.equalsIgnoreCase("B")
-                && !userAnswer.equalsIgnoreCase("C") && !userAnswer.equalsIgnoreCase("D"))
+        if(this.userAnswer == -1)
+            return;
+
+        if (this.answerChoices.get(this.userAnswer).equalsIgnoreCase(this.correctAnswer))
+        {
+            this.currScore++;
+            showQuestionResultAlert(view, true);
+        }
+        else
+            showQuestionResultAlert(view, false);
+
+        System.out.println("Updated Score: " + this.currScore);
+
+    }
+
+    // Translate A, B, C, & D to 0,1,2,3 (indexs of the answer arraylist)
+    public void translateAnswer(View view, String answer)
+    {
+        // If user doesn't enter A, B, C or D, send them a message for not being able
+        // to follow directions
+        if(!answer.equalsIgnoreCase("A") && !answer.equalsIgnoreCase("B")
+                && !answer.equalsIgnoreCase("C") && !answer.equalsIgnoreCase("D"))
         {
             showBadInputAlert(view);
+            this.userAnswer = -1;
             return;
         }
 
+        if(answer.equalsIgnoreCase("A"))
+            this.userAnswer = 0;
+        else if(answer.equalsIgnoreCase("B"))
+            this.userAnswer = 1;
+        else if(answer.equalsIgnoreCase("C"))
+            this.userAnswer = 2;
+        else if(answer.equalsIgnoreCase("D"))
+            this.userAnswer = 3;
     }
 
     public void showQuestionResultAlert(View view, boolean correct)
@@ -113,13 +148,26 @@ public class QuestionActivity extends AppCompatActivity
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Stop It. Get Some Help.").
-                setMessage("Enter the letters A, B, C or D as your answer choices!")
-                .setNeutralButton("OK", null);;
+        builder.setTitle(title).
+                setMessage(message)
+                .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        returnToPrevActivity();
+                    }
+                });
 
         // Create the AlertDialog
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public void returnToPrevActivity()
+    {
+        Intent mainIntent = new Intent();
+        mainIntent.putExtra("updated_score", this.currScore);
+        setResult(RESULT_OK, mainIntent);
+        finish();
     }
 
     public void showBadInputAlert(View view)
