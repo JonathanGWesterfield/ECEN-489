@@ -1,9 +1,0 @@
-<resources>
-    <string name="app_name">MP5Part2</string>
-    <string name="quiz">Quiz Topics</string>
-    <string-array name="quiz_topics">
-        <item>Computer History</item>
-        <item>American History</item>
-        <item>Martial Arts</item>
-    </string-array>
-</resources>
