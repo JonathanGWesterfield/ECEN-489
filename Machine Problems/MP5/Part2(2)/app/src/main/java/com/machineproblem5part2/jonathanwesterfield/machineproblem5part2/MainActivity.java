@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity
         Intent showQuestion = new Intent(this, QuestionActivity.class);
         showQuestion.putExtra("question_object", this.questions.get(index));
         showQuestion.putExtra("score", this.score);
-        startActivity(showQuestion);
+        startActivityForResult(showQuestion, 1);
     }
 
     public void showNoMoreQuestionsAlert(View view)
