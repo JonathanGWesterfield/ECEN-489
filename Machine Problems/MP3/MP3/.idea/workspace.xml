@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f91aa2da-6815-4d92-bc4d-fb0d9ecf3807" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../MP5/MP5/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../MP5/MP5/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../MP5/MP5/app/src/main/java/com/machineproblem5/jonathanwesterfield/mp5/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../MP5/MP5/app/src/main/java/com/machineproblem5/jonathanwesterfield/mp5/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../MP5/MP5/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../MP5/MP5/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MP5/Part1/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../MP5/Part1/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MP5/Part2(2)/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../MP5/Part2(2)/.idea/misc.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -129,6 +127,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -145,8 +145,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
