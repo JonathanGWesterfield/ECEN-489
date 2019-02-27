@@ -7,6 +7,10 @@ public class NewsObj
     private Article[] articles;
 
 
+    /**
+     * This class must be setup this way in order to get the nested json information
+     * with Gson
+     */
     public NewsObj()
     {
         // No args constructor for Gson
@@ -26,6 +30,41 @@ public class NewsObj
          {
              // no args constructor for GSON
          }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public String getAuthor() {
+            return author;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public String getPublishedAt() {
+            return publishedAt;
+        }
+
+        public String getUrlToImage() {
+            return urlToImage;
+        }
+
+        public String toString()
+        {
+            return String.format("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n", this.title,
+                    this.description, this.author, this.content, this.urlToImage,
+                    this.urlToImage, this.publishedAt);
+        }
     }
 
     public String toString()
@@ -46,4 +85,7 @@ public class NewsObj
         return result;
     }
 
+    public Article[] getArticles() {
+        return articles;
+    }
 }
