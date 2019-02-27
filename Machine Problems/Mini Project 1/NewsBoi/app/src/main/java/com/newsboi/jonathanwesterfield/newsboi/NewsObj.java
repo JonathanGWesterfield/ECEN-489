@@ -1,5 +1,7 @@
 package com.newsboi.jonathanwesterfield.newsboi;
 
+import java.io.Serializable;
+
 public class NewsObj
 {
     private String status;
@@ -16,7 +18,7 @@ public class NewsObj
         // No args constructor for Gson
     }
 
-    public static class Article
+    public static class Article implements Serializable
     {
          String author;
          String title;
