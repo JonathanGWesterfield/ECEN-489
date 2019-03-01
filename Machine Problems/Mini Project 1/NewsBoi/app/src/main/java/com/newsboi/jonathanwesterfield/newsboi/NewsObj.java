@@ -2,7 +2,7 @@ package com.newsboi.jonathanwesterfield.newsboi;
 
 import java.io.Serializable;
 
-public class NewsObj
+public class NewsObj implements Serializable
 {
     private String status;
     private String numResults;

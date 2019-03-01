@@ -5,16 +5,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 
 import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -33,12 +29,12 @@ public class NewsLookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_look);
 
-        initializeInterfaces();
+        // initializeInterfaces();
 
-        Intent fromMain = getIntent();
-        this.article = (NewsObj.Article) fromMain.getSerializableExtra("article_object");
+        // Intent fromMain = getIntent();
+        // this.article = (NewsObj.Article) fromMain.getSerializableExtra("article_object");
 
-        displayArticle();
+        // displayArticle();
     }
 
     /**
@@ -46,7 +42,7 @@ public class NewsLookActivity extends AppCompatActivity {
      */
     public void initializeInterfaces()
     {
-        this.webView = (WebView) findViewById(R.id.webview);
+        // this.webView = (WebView) findViewById(R.id.webView);
         this.webView.setWebViewClient(new WebViewClient());
         this.saveBtn = (Button) findViewById(R.id.saveBtn);
         this.backBtn = (Button) findViewById(R.id.backBtn);
@@ -68,7 +64,6 @@ public class NewsLookActivity extends AppCompatActivity {
     {
         try
         {
-
             Gson gson = new Gson();
             String articleJson = gson.toJson(article);
             System.out.println("JSON OBJECT");

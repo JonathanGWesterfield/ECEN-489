@@ -11,10 +11,12 @@ import android.widget.TextView;
 
 import com.koushikdutta.ion.Ion;
 
+import java.util.ArrayList;
+
 public class NewsAdapter extends ArrayAdapter
 {
     Context mcontext;
-    NewsObj.Article articles[];
+    ArrayList<NewsObj.Article> articles;
     private int lastPosition = -1;
 
     // Class to hold all of the elements of the view so we can populate them in the getView method
@@ -25,7 +27,7 @@ public class NewsAdapter extends ArrayAdapter
         ImageView listImage;
     }
 
-    public NewsAdapter(Context context, NewsObj.Article[] articles)
+    public NewsAdapter(Context context, ArrayList<NewsObj.Article> articles)
     {
         super(context, R.layout.row_layout, articles);
         this.articles = articles;
@@ -46,7 +48,7 @@ public class NewsAdapter extends ArrayAdapter
     public View getView(int position, View convertView, ViewGroup parent)
     {
         // Get the data item for this position
-        NewsObj.Article article = articles[position];
+        NewsObj.Article article = articles.get(position);
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
 
