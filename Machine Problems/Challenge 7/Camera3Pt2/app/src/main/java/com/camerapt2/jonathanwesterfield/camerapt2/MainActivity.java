@@ -26,10 +26,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import java.text.NumberFormat;
+import java.text.ParsePosition;
+
 public class MainActivity extends AppCompatActivity
 {
     private static final int REQUEST_CAMERA_PERMISSION = 1;
-    private static final int REQ_CODE_TAKE_PICTURE = 90210;
+    private static final int REQ_CODE_TAKE_PICTURE = 1;
     ImageView imgView;
     ImageButton captureBtn;
     EditText lookupTxt;
@@ -67,7 +70,39 @@ public class MainActivity extends AppCompatActivity
         else
             requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
     }
-    
+
+    public void onLookupClk(View view)
+    {
+        String idChoice = this.lookupTxt.getText().toString();
+
+        // check if what was input is actually a number
+        if (isNumeric(idChoice))
+        {
+            try
+            {
+                String encodedImg = db.getPic(idChoice);
+                Bitmap bmp = db.decodeFromBase64(encodedImg);
+                this.imgView.setImageBitmap(bmp);
+            }
+            catch (SQLiteException e )
+            {
+                System.out.println("COULDN'T READ SELECT FROM DB");
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            showInvalidIDAlert(view);
+        }
+    }
+
+    public boolean isNumeric(String str) {
+        NumberFormat formatter = NumberFormat.getInstance();
+        ParsePosition pos = new ParsePosition(0);
+        formatter.parse(str, pos);
+        return str.length() == pos.getIndex();
+    }
 
     public void onCaptureBtnClk(View view)
     {
@@ -130,6 +165,19 @@ public class MainActivity extends AppCompatActivity
                                     activity.finish();
                             }
                         });
+
+
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void showInvalidIDAlert(View view)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Stop It. Get Some Help.").
+                setMessage("Please enter a numeric ID")
+                .setNeutralButton("Yeet", null);
 
 
         // Create the AlertDialog

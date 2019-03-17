@@ -51,7 +51,7 @@ public class DBAPI
         db.execSQL(insert);
     }
 
-    public String getPic(String id)
+    public String getPic(String id) throws SQLiteException
     {
         String select = "SELECT image FROM " + this.dbName + " WHERE id=" + id;
         Cursor cr = db.rawQuery(select, null);
