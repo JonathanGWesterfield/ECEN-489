@@ -71,6 +71,11 @@ public class MainActivity extends AppCompatActivity
             requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
     }
 
+    /**
+     * Lookup button click listener. Get the entered ID and select record from the database.
+     * If the record can't be found or doesn't exist, display an error message
+     * @param view
+     */
     public void onLookupClk(View view)
     {
         String idChoice = this.lookupTxt.getText().toString();
@@ -81,8 +86,13 @@ public class MainActivity extends AppCompatActivity
             try
             {
                 String encodedImg = db.getPic(idChoice);
-                Bitmap bmp = db.decodeFromBase64(encodedImg);
-                this.imgView.setImageBitmap(bmp);
+                if(encodedImg.equalsIgnoreCase("MASSIVE FUCKING SQL ERROR"))
+                    showPicNotFoundAlert(view);
+                else
+                {
+                    Bitmap bmp = db.decodeFromBase64(encodedImg);
+                    this.imgView.setImageBitmap(bmp);
+                }
             }
             catch (SQLiteException e )
             {
@@ -109,6 +119,12 @@ public class MainActivity extends AppCompatActivity
         openCamera();
     }
 
+    /**
+     * Open up the camera app to take a picture since I don't know the correct
+     * REQ_CODE to take a picture. 90210 from the slides is bullshit and doesn't work.
+     * It makes the app crash every time so REQ_CODE is set to be 1 since I couldn't find
+     * any documentation that actually lists what the code numbers mean
+     */
     public void openCamera()
     {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -118,6 +134,12 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    /**
+     * Get the picture that was taken with the defualt camera app.
+     * @param requestCode
+     * @param resultCode
+     * @param intent
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent)
     {
@@ -139,6 +161,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Sometimes we have to ask the user for permission to use the camera
+     * Shows OK/Cancel confirmation dialog about camera permission.
+     * @param view
+     */
     public void showCameraPermissionsAlert(View view)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -172,6 +199,10 @@ public class MainActivity extends AppCompatActivity
         dialog.show();
     }
 
+    /**
+     * Shows the user entered ID is not numeric or has something else wrong with it
+     * @param view
+     */
     public void showInvalidIDAlert(View view)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -186,33 +217,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Shows OK/Cancel confirmation dialog about camera permission.
+     * Alert to show that the record wasn't found in the database
+     * @param view
      */
-    public static class ConfirmationDialog extends DialogFragment {
+    public void showPicNotFoundAlert(View view)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("It literally doesn't exist").
+                setMessage("Couldn't find a picture with that ID in our database.")
+                .setNeutralButton("Yeet", null);
 
 
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            return new AlertDialog.Builder(getActivity())
-                    .setMessage("This sample needs camera permission")
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            requestPermissions(new String[]{Manifest.permission.CAMERA},
-                                    REQUEST_CAMERA_PERMISSION);
-                        }
-                    })
-                    .setNegativeButton(android.R.string.cancel,
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Activity activity = getActivity();
-                                    if (activity != null) {
-                                        activity.finish();
-                                    }
-                                }
-                            })
-                    .create();
-        }
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

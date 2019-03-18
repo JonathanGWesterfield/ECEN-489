@@ -17,7 +17,7 @@ public class DBAPI
     private final String dbName = "Pictures";
     private final String CREATE_SQL = "CREATE TABLE " + this.dbName + " (" +
             "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-            "image TEXT)";
+            " image TEXT)";
     private final String DROP_TABLE_SQL = "DROP TABLE IF EXISTS " + this.dbName;
 
     public DBAPI() { /* Empty Constructor */}
@@ -30,6 +30,10 @@ public class DBAPI
         createDB();
     }
 
+    /**
+     * We reset the database everytime we start the app because I was lazy and didn't want
+     * to troubleshoot the database if things didn't work or I wrote the wrong SQL statement
+     */
     private void createDB()
     {
         try
@@ -45,12 +49,25 @@ public class DBAPI
         }
     }
 
+    /**
+     * Inserts a newly taken image into the database. The image bitmap must first be converted
+     * to a base64 string so that we don't have to insert it as a blob. Blobs are bad
+     * @param base64Img
+     * @throws SQLiteException
+     */
     public void insertImg(String base64Img) throws SQLiteException
     {
         String insert = "INSERT INTO " + this.dbName + "(image) VALUES ('" + base64Img + "')";
         db.execSQL(insert);
     }
 
+    /**
+     * Using the entered user id, find a corresponding picture. If one isn't found or an
+     * error is thrown, return that to the calling function to deal with it
+     * @param id
+     * @return
+     * @throws SQLiteException
+     */
     public String getPic(String id) throws SQLiteException
     {
         String select = "SELECT image FROM " + this.dbName + " WHERE id=" + id;
@@ -85,6 +102,11 @@ public class DBAPI
         return base64Image;
     }
 
+    /**
+     * Decode the base64 string back into the original image bitmap
+     * @param base64Img
+     * @return
+     */
     public Bitmap decodeFromBase64(String base64Img)
     {
         byte[] data = Base64.decode(base64Img, Base64.DEFAULT);
