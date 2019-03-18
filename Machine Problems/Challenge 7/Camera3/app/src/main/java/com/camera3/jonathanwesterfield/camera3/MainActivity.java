@@ -26,7 +26,7 @@ import android.widget.ImageView;
 public class MainActivity extends AppCompatActivity
 {
 private static final int REQUEST_CAMERA_PERMISSION = 1;
-    private static final int REQ_CODE_TAKE_PICTURE = 90210;
+    private static final int REQ_CODE_TAKE_PICTURE = 1;
     ImageView imgView;
     ImageButton captureBtn;
 
