@@ -12,6 +12,10 @@ import android.widget.RadioGroup;
 // Can call like this <character = BART> instead of <character = Student.BART>
 import static com.mp8.jonathanwesterfield.machineproblem8.Student.*;
 
+/**
+ * Making an Enum class is admittedly redundant but it makes the code more readable than
+ * translating the radio buttons into an integer ID like 1,2,3,4
+ */
 enum Student
 {
     BART, LISA, RALPH, MILHOUSE;
@@ -22,6 +26,8 @@ public class PushActivity extends AppCompatActivity
     private EditText courseIDField, courseNameField, gradeField;
     private RadioButton bartBtn, lisaBtn, ralphBtn, milhousebtn;
     private Button pushBtn;
+
+    private String studentID, courseID, courseName, grade;
 
     // set the defaualt student to Bart since thats how it is in the radio group
     private Student student = BART;
@@ -88,6 +94,8 @@ public class PushActivity extends AppCompatActivity
 
         this.pushBtn = (Button) findViewById(R.id.pushBtn);
     }
+
+    // TODO: Implement the push button
 
 
 }

@@ -11,6 +11,7 @@ public class PullActivity extends AppCompatActivity
     private RecyclerView recView;
     private Button query1Btn, query2Btn, pushBtn, signOutBtn;
     private EditText idField;
+    private String idChoice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -30,4 +31,6 @@ public class PullActivity extends AppCompatActivity
         this.signOutBtn = (Button) findViewById(R.id.signOutBtn);
         this.idField = (EditText) findViewById(R.id.studentIDField);
     }
+
+    // TODO: Implement signout, both query buttons and push button
 }
