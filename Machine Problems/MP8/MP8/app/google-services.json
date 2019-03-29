@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "380524172253",
+    "firebase_url": "https://machine-problem-8.firebaseio.com",
+    "project_id": "machine-problem-8",
+    "storage_bucket": "machine-problem-8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380524172253:android:a25ef05b836b3532",
+        "android_client_info": {
+          "package_name": "com.mp8.jonathanwesterfield.machineproblem8"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "380524172253-a60ic1erbas8rg7erksg0ic8vtcunq2c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mp8.jonathanwesterfield.machineproblem8",
+            "certificate_hash": "e31b44880ef903cf01349420f07602c3db7a6472"
+          }
+        },
+        {
+          "client_id": "380524172253-piedphl209o6n9tpfppdslu60i19gb4k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPsa_Cfx6-bjwwCUblH94fBbJKImpN5uM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "380524172253-piedphl209o6n9tpfppdslu60i19gb4k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
