@@ -3,13 +3,18 @@ package com.mp8.jonathanwesterfield.machineproblem8;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.*;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 // Import this so I don't have to explicitly call my enum class
 // Can call like this <character = BART> instead of <character = Student.BART>
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.mp8.jonathanwesterfield.machineproblem8.Student.*;
 
 /**
@@ -27,7 +32,25 @@ public class PushActivity extends AppCompatActivity
     private RadioButton bartBtn, lisaBtn, ralphBtn, milhousebtn;
     private Button pushBtn;
 
-    private String studentID, courseID, courseName, grade;
+    private DatabaseReference dbRef;
+    private DatabaseReference dbTable;
+    private FirebaseDatabase fireDB;
+    private FirebaseAuth mAuth;
+    private FirebaseUser fUser;
+
+    // Static map for the student ID's
+    private final Map<Student, Integer> studentIDs = new HashMap<Student, Integer>()
+    {
+        {
+            put(BART, 123);
+            put(LISA, 888);
+            put(RALPH, 404);
+            put(MILHOUSE, 456);
+        }
+    };
+
+    private String courseName, grade;
+    private int studentID, courseID;
 
     // set the defaualt student to Bart since thats how it is in the radio group
     private Student student = BART;
@@ -39,6 +62,16 @@ public class PushActivity extends AppCompatActivity
         setContentView(R.layout.activity_push);
 
         initInterfaces();
+        getDBConn();
+    }
+
+    public void getDBConn()
+    {
+        mAuth = FirebaseAuth.getInstance();
+        fUser = mAuth.getCurrentUser();
+        fireDB = FirebaseDatabase.getInstance();
+        dbRef = fireDB.getReference();
+        dbTable = dbRef.child("simpsons/grades/");
     }
 
     public void initInterfaces()
@@ -68,7 +101,7 @@ public class PushActivity extends AppCompatActivity
                 student = LISA;
             }
         };
-        this.bartBtn.setOnClickListener(lisaClk);
+        this.lisaBtn.setOnClickListener(lisaClk);
 
         this.ralphBtn = (RadioButton) findViewById(R.id.ralphBtn);
         View.OnClickListener ralphClk = new View.OnClickListener()
@@ -79,7 +112,7 @@ public class PushActivity extends AppCompatActivity
                 student = RALPH;
             }
         };
-        this.bartBtn.setOnClickListener(ralphClk);
+        this.ralphBtn.setOnClickListener(ralphClk);
 
         this.milhousebtn = (RadioButton) findViewById(R.id.milhouseBtn);
         View.OnClickListener milhouseClk = new View.OnClickListener()
@@ -90,12 +123,103 @@ public class PushActivity extends AppCompatActivity
                 student = MILHOUSE;
             }
         };
-        this.bartBtn.setOnClickListener(milhouseClk);
+        this.milhousebtn.setOnClickListener(milhouseClk);
 
         this.pushBtn = (Button) findViewById(R.id.pushBtn);
     }
 
+    public void pushClk(View view)
+    {
+        courseID = Integer.parseInt(courseIDField.getText().toString());
+        courseName = courseNameField.getText().toString();
+        grade = gradeField.getText().toString();
+        studentID = studentIDs.get(student);
+
+        //String studentID, String courseID, String courseName, String grade)
+        GradeObj passObj = new GradeObj(studentID, courseID, courseName, grade);
+
+
+        // DatabaseReference insLoc = dbRef.child("simpsons/grades/");
+        DatabaseReference ranKey = dbTable.push();
+        ranKey.setValue(passObj, new DatabaseReference.CompletionListener()
+        {
+            public void onComplete(DatabaseError err, DatabaseReference ref)
+            {
+                // no error
+                if (err == null)
+                    Toast.makeText(getApplicationContext(), "Finished uploading Grades",
+                            Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getApplicationContext(), "FAILED to upload Grades",
+                            Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
+    //TODO: course_id, course_name, grade, student_id
     // TODO: Implement the push button
 
 
 }
+
+
+/*
+dbTable.child("course_id").setValue(courseID,
+                new DatabaseReference.CompletionListener()
+                {
+                    public void onComplete(DatabaseError err, DatabaseReference ref)
+                    {
+                        // no error
+                        if (err == null)
+                            Toast.makeText(getApplicationContext(), "Finished uploading Course ID",
+                                    Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(getApplicationContext(), "FAILED to upload Course ID",
+                                    Toast.LENGTH_SHORT).show();
+                    }
+                });
+        dbTable.child("course_name").setValue(courseName,
+                new DatabaseReference.CompletionListener()
+                {
+                    public void onComplete(DatabaseError err, DatabaseReference ref)
+                    {
+                        // no error
+                        if (err == null)
+                            Toast.makeText(getApplicationContext(), "Finished uploading Course Name",
+                                    Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(getApplicationContext(), "FAILED to upload Course Name",
+                                    Toast.LENGTH_SHORT).show();
+                    }
+                });
+        dbTable.child("grade").setValue(grade,
+                new DatabaseReference.CompletionListener()
+                {
+                    public void onComplete(DatabaseError err, DatabaseReference ref)
+                    {
+                        // no error
+                        if (err == null)
+                            Toast.makeText(getApplicationContext(), "Finished uploading Grade",
+                                    Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(getApplicationContext(), "FAILED to upload Grade",
+                                    Toast.LENGTH_SHORT).show();
+                    }
+                });
+        dbTable.child("student_id").setValue(studentID,
+                new DatabaseReference.CompletionListener()
+                {
+                    public void onComplete(DatabaseError err, DatabaseReference ref)
+                    {
+                        // no error
+                        if (err == null)
+                            Toast.makeText(getApplicationContext(), "Finished uploading Student ID",
+                                    Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(getApplicationContext(), "FAILED to upload Student ID",
+                                    Toast.LENGTH_SHORT).show();
+                    }
+                });
+ */

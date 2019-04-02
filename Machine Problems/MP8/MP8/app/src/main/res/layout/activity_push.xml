@@ -81,9 +81,9 @@
             android:layout_height="131dp" />
 
         <Button
-            android:id="@+id/pushBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Push" />
+                android:id="@+id/pushBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Push" android:onClick="pushClk"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

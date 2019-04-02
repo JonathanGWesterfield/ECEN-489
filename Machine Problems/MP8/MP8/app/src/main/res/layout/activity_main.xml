@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Username"
+            android:text="user@email.com"
             android:textAlignment="textStart" />
 
         <EditText
@@ -63,14 +63,14 @@
             android:id="@+id/accountCreateBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="createAccount"
+            android:onClick="createAcctClk"
             android:text="Create Account" />
 
         <Button
             android:id="@+id/loginBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="login"
+            android:onClick="loginClk"
             android:text="Login" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

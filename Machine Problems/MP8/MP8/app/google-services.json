@@ -8,6 +8,39 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:380524172253:android:4e0df82f41183ca7",
+        "android_client_info": {
+          "package_name": "com.machine_problem_8.jonathanwesterfield.machineproblem8"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "380524172253-uil9jf4ar2ln32qknf6un86cmrh8i594.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.machine_problem_8.jonathanwesterfield.machineproblem8",
+            "certificate_hash": "e31b44880ef903cf01349420f07602c3db7a6472"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPsa_Cfx6-bjwwCUblH94fBbJKImpN5uM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "380524172253-piedphl209o6n9tpfppdslu60i19gb4k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:380524172253:android:a25ef05b836b3532",
         "android_client_info": {
           "package_name": "com.mp8.jonathanwesterfield.machineproblem8"
@@ -21,10 +54,6 @@
             "package_name": "com.mp8.jonathanwesterfield.machineproblem8",
             "certificate_hash": "e31b44880ef903cf01349420f07602c3db7a6472"
           }
-        },
-        {
-          "client_id": "380524172253-piedphl209o6n9tpfppdslu60i19gb4k.apps.googleusercontent.com",
-          "client_type": 3
         }
       ],
       "api_key": [
@@ -33,20 +62,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "380524172253-piedphl209o6n9tpfppdslu60i19gb4k.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

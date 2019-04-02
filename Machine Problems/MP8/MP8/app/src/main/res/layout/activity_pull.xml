@@ -59,18 +59,18 @@
                 android:text="Query 2" />
 
             <Button
-                android:id="@+id/pushBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Push" />
+                    android:id="@+id/pushBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Push" android:onClick="pushBtnClk"/>
 
             <Button
-                android:id="@+id/signOutBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Sign Out" />
+                    android:id="@+id/signOutBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sign Out" android:onClick="setSignOutBtn"/>
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
