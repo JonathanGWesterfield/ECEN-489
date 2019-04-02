@@ -48,6 +48,23 @@ public class VariousAlerts
     }
 
     /**
+     * Alert to show that the specific query to firebase failed.
+     * @param view
+     * @param context
+     */
+    public static void showFailedQueryAlert(View view, Context context)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Firebase Query Failed").
+                setMessage("The Query failed.\nPlease try again.")
+                .setNeutralButton("OK", null);
+
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    /**
      * Alert to show that the email or password was wrong and could not be
      * authenticated. User can't login
      * @param view

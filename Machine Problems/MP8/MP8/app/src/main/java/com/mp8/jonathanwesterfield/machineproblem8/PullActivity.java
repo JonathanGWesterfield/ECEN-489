@@ -1,5 +1,6 @@
 package com.mp8.jonathanwesterfield.machineproblem8;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,17 +11,23 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.*;
+
+import java.util.ArrayList;
 
 public class PullActivity extends AppCompatActivity
 {
     private RecyclerView recView;
     private Button query1Btn, query2Btn, pushBtn, signOutBtn;
     private EditText idField;
-    private String idChoice;
+    private int idChoice;
     private DBAccesObj db;
+    private DatabaseReference dbRef;
+    private DatabaseReference dbTable;
+    private FirebaseDatabase fireDB;
     private FirebaseAuth mAuth;
     private FirebaseUser fUser;
-    private String email, passwd;
+    private ArrayList<GradeObj> retGradeList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -30,13 +37,18 @@ public class PullActivity extends AppCompatActivity
 
         Intent intent = getIntent();
 
-        this.email = intent.getExtras().getString("email");
-        this.passwd = intent.getExtras().getString("passwd");
-
-        mAuth = FirebaseAuth.getInstance();
-        fUser = mAuth.getCurrentUser();
+        getDBConn();
 
         initInterfaces();
+    }
+
+    public void getDBConn()
+    {
+        mAuth = FirebaseAuth.getInstance();
+        fUser = mAuth.getCurrentUser();
+        fireDB = FirebaseDatabase.getInstance();
+        dbRef = fireDB.getReference();
+        dbTable = dbRef.child("simpsons/grades/");
     }
 
     public void initInterfaces()
@@ -62,5 +74,66 @@ public class PullActivity extends AppCompatActivity
         Intent intent = new Intent(this, PushActivity.class);
         startActivity(intent);
     }
+
+
+    public void query1Clk(View view)
+    {
+        try
+        {
+            idChoice = Integer.parseInt(idField.getText().toString());
+
+            Query query = dbTable.orderByChild("student_id").equalTo(idChoice);
+            query.addListenerForSingleValueEvent(getValueEventListener());
+        }
+        catch (NumberFormatException e)
+        {
+            VariousAlerts.showFieldIsNumericAlert(view, this, "ID");
+        }
+    }
+
+    /**
+     * Event listener for both queries. Since it just fills up the GradeObj arraylist,
+     * can be used for both query 1 and 2.
+     * @return
+     */
+    public ValueEventListener getValueEventListener()
+    {
+        ValueEventListener valueEventListener = new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if (dataSnapshot.exists())
+                {
+                    // clear the arraylist to refill it
+                    retGradeList = new ArrayList<>();
+                    //Toast.makeText(getApplicationContext(),"listening",Toast.LENGTH_SHORT).show();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                    {
+                        GradeObj grade = snapshot.getValue(GradeObj.class);
+
+                        retGradeList.add(grade);
+                    }
+                    Toast.makeText(getApplicationContext(), "Query Finished", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError)
+            {
+                Toast.makeText(getApplicationContext(), "Query Failed", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        return valueEventListener;
+    }
+
+    public void fillAdapter()
+    {
+
+    }
+
+
     // TODO: Implement both query buttons
+    //TODO: int course_id, course_name, grade, int student_id
 }

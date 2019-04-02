@@ -160,8 +160,6 @@ public class MainActivity extends AppCompatActivity
     public void switchToPullActivity()
     {
         Intent goPull = new Intent(this, PullActivity.class);
-        goPull.putExtra("email", email);
-        goPull.putExtra("passwd", passwd);
         startActivity(goPull);
     }
 }

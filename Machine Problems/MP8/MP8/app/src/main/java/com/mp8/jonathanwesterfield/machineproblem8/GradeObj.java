@@ -7,10 +7,7 @@ public class GradeObj implements Serializable
     private String courseName, grade;
     private int studentID, courseID;
 
-    public GradeObj()
-    {
-        // empty constructor
-    }
+    public GradeObj() { /* empty constructor */ }
 
     public GradeObj(int studentID, int courseID, String courseName, String grade)
     {
