@@ -19,7 +19,8 @@ import static com.mp8.jonathanwesterfield.machineproblem8.Student.*;
 
 /**
  * Making an Enum class is admittedly redundant but it makes the code more readable than
- * translating the radio buttons into an integer ID like 1,2,3,4
+ * translating the radio buttons into an integer ID like 1,2,3,4. Also simplifies
+ * things later on down the line as seen in the studentID's HashMap
  */
 enum Student
 {
@@ -52,7 +53,7 @@ public class PushActivity extends AppCompatActivity
     private String courseName, grade;
     private int studentID, courseID;
 
-    // set the defaualt student to Bart since thats how it is in the radio group
+    // set the default student to Bart since thats how it is in the radio group
     private Student student = BART;
 
     @Override
@@ -156,70 +157,4 @@ public class PushActivity extends AppCompatActivity
         });
 
     }
-
-
-    //TODO: course_id, course_name, grade, student_id
-    // TODO: Implement the push button
-
-
 }
-
-
-/*
-dbTable.child("course_id").setValue(courseID,
-                new DatabaseReference.CompletionListener()
-                {
-                    public void onComplete(DatabaseError err, DatabaseReference ref)
-                    {
-                        // no error
-                        if (err == null)
-                            Toast.makeText(getApplicationContext(), "Finished uploading Course ID",
-                                    Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(getApplicationContext(), "FAILED to upload Course ID",
-                                    Toast.LENGTH_SHORT).show();
-                    }
-                });
-        dbTable.child("course_name").setValue(courseName,
-                new DatabaseReference.CompletionListener()
-                {
-                    public void onComplete(DatabaseError err, DatabaseReference ref)
-                    {
-                        // no error
-                        if (err == null)
-                            Toast.makeText(getApplicationContext(), "Finished uploading Course Name",
-                                    Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(getApplicationContext(), "FAILED to upload Course Name",
-                                    Toast.LENGTH_SHORT).show();
-                    }
-                });
-        dbTable.child("grade").setValue(grade,
-                new DatabaseReference.CompletionListener()
-                {
-                    public void onComplete(DatabaseError err, DatabaseReference ref)
-                    {
-                        // no error
-                        if (err == null)
-                            Toast.makeText(getApplicationContext(), "Finished uploading Grade",
-                                    Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(getApplicationContext(), "FAILED to upload Grade",
-                                    Toast.LENGTH_SHORT).show();
-                    }
-                });
-        dbTable.child("student_id").setValue(studentID,
-                new DatabaseReference.CompletionListener()
-                {
-                    public void onComplete(DatabaseError err, DatabaseReference ref)
-                    {
-                        // no error
-                        if (err == null)
-                            Toast.makeText(getApplicationContext(), "Finished uploading Student ID",
-                                    Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(getApplicationContext(), "FAILED to upload Student ID",
-                                    Toast.LENGTH_SHORT).show();
-                    }
-                });
- */
