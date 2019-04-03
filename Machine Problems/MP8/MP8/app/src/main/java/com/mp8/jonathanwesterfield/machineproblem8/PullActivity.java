@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -14,6 +16,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static com.mp8.jonathanwesterfield.machineproblem8.Student.*;
 
 public class PullActivity extends AppCompatActivity
 {
@@ -27,7 +34,20 @@ public class PullActivity extends AppCompatActivity
     private FirebaseDatabase fireDB;
     private FirebaseAuth mAuth;
     private FirebaseUser fUser;
-    private ArrayList<GradeObj> retGradeList = new ArrayList<>();
+    private List<GradeObj> retGradeList;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+    // Static map for the student ID's
+    private final Map<Integer, String> studentIDs = new HashMap<Integer, String> ()
+    {
+        {
+            put(123, "Bart");
+            put(888, "Lisa");
+            put(404, "Ralph");
+            put(456, "Milhouse");
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -76,6 +96,10 @@ public class PullActivity extends AppCompatActivity
     }
 
 
+    /**
+     * Click for query 1 which is get all grades for student with a particular ID
+     * @param view
+     */
     public void query1Clk(View view)
     {
         try
@@ -83,6 +107,27 @@ public class PullActivity extends AppCompatActivity
             idChoice = Integer.parseInt(idField.getText().toString());
 
             Query query = dbTable.orderByChild("student_id").equalTo(idChoice);
+            query.addListenerForSingleValueEvent(getValueEventListener());
+        }
+        catch (NumberFormatException e)
+        {
+            VariousAlerts.showFieldIsNumericAlert(view, this, "ID");
+        }
+    }
+
+    /**
+     * Click for query 2 which
+     * @param view
+     */
+    public void query2Clk(View view)
+    {
+        try
+        {
+            idChoice = Integer.parseInt(idField.getText().toString());
+
+            // The actual statement that queries the database
+            Query query = dbTable.orderByChild("student_id").startAt(idChoice);
+
             query.addListenerForSingleValueEvent(getValueEventListener());
         }
         catch (NumberFormatException e)
@@ -115,6 +160,9 @@ public class PullActivity extends AppCompatActivity
                         retGradeList.add(grade);
                     }
                     Toast.makeText(getApplicationContext(), "Query Finished", Toast.LENGTH_SHORT).show();
+
+                    fillAdapter();
+                    showRecyclerView();
                 }
             }
 
@@ -128,12 +176,26 @@ public class PullActivity extends AppCompatActivity
         return valueEventListener;
     }
 
-    public void fillAdapter()
+    public void showRecyclerView()
     {
-
+        this.recView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recView.setLayoutManager(layoutManager);
+        this.recView.setAdapter(mAdapter);
     }
 
+    public void fillAdapter()
+    {
+        List<String> tempCourses = new ArrayList<>();
+        List<String> tempGrades = new ArrayList<>();
+        List<String> tempNames = new ArrayList<>();
 
-    // TODO: Implement both query buttons
-    //TODO: int course_id, course_name, grade, int student_id
+        for (GradeObj obj : this.retGradeList)
+        {
+            tempNames.add(studentIDs.get(obj.getstudent_id()));
+            tempCourses.add(obj.getcourse_name());
+            tempGrades.add(obj.getgrade());
+        }
+        mAdapter = new MyAdapter(tempNames, tempCourses, tempGrades);
+    }
 }

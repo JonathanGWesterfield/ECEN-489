@@ -50,8 +50,8 @@ public class PushActivity extends AppCompatActivity
         }
     };
 
-    private String courseName, grade;
-    private int studentID, courseID;
+    private String course_name, grade;
+    private int student_id, course_id;
 
     // set the default student to Bart since thats how it is in the radio group
     private Student student = BART;
@@ -131,13 +131,12 @@ public class PushActivity extends AppCompatActivity
 
     public void pushClk(View view)
     {
-        courseID = Integer.parseInt(courseIDField.getText().toString());
-        courseName = courseNameField.getText().toString();
+        course_id = Integer.parseInt(courseIDField.getText().toString());
+        course_name = courseNameField.getText().toString();
         grade = gradeField.getText().toString();
-        studentID = studentIDs.get(student);
+        student_id = studentIDs.get(student);
 
-        //String studentID, String courseID, String courseName, String grade)
-        GradeObj passObj = new GradeObj(studentID, courseID, courseName, grade);
+        GradeObj passObj = new GradeObj(course_id, course_name, grade, student_id);
 
 
         // DatabaseReference insLoc = dbRef.child("simpsons/grades/");

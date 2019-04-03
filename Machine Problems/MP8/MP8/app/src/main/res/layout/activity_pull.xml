@@ -52,11 +52,11 @@
                     android:text="Query 1" android:onClick="query1Clk"/>
 
             <Button
-                android:id="@+id/query2Btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Query 2" />
+                    android:id="@+id/query2Btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Query 2" android:onClick="query2Clk"/>
 
             <Button
                     android:id="@+id/pushBtn"
