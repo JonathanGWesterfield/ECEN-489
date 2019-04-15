@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "765193908917",
+    "firebase_url": "https://tensor-train-3c5df.firebaseio.com",
+    "project_id": "tensor-train-3c5df",
+    "storage_bucket": "tensor-train-3c5df.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:765193908917:android:e13807ce86644919",
+        "android_client_info": {
+          "package_name": "com.tensortrain.jonathanwesterfield.tensortrain"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "765193908917-i893fl2g3p3jua3ock733ic06j902rf9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgORRfgaWHkv7rbncV4v5qQIxyj9SuK38"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "765193908917-i893fl2g3p3jua3ock733ic06j902rf9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
