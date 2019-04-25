@@ -54,6 +54,8 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.IOException;
@@ -83,6 +85,8 @@ public class Camera2BasicFragment extends Fragment
   private boolean checkedPermissions = false;
   private TextView textView;
   private ImageClassifier classifier;
+  private Button captureBtn;
+  private ListView listView;
 
   /** Max preview width that is guaranteed by Camera2 API */
   private static final int MAX_PREVIEW_WIDTH = 1920;
@@ -289,6 +293,42 @@ public class Camera2BasicFragment extends Fragment
   public void onViewCreated(final View view, Bundle savedInstanceState) {
     textureView = (AutoFitTextureView) view.findViewById(R.id.texture);
     textView = (TextView) view.findViewById(R.id.text);
+    listView = (ListView) view.findViewById(R.id.listView);
+    captureBtn = (Button) view.findViewById(R.id.captureBtn);
+    setCaptureBtnClk(view);
+  }
+
+  /**
+   * Get the current picture from the textureview, classify it and then populate the list view.
+   * We call the classify frame multiple times because it gets more accurate with every classification call.
+   * @param view
+   */
+  public void setCaptureBtnClk(View view)
+  {
+    (view.findViewById(R.id.captureBtn)).setOnClickListener(new View.OnClickListener()
+    {
+      @Override public void onClick(View view) {
+        for(int i = 0; i < 15; i++)
+          classifyFrame();
+        String results = classifyFrame();
+        outputResults(results);
+      }
+    });
+  }
+
+  /**
+   * Takes the returned string and outputs it to the listview
+   * @param results
+   * @return
+   */
+  public void outputResults(String results)
+  {
+    ArrayList<String> textLines = new ArrayList<>();
+    textLines.addAll(Arrays.asList(results.split("\n")));
+
+    TextAdapter adapter = new TextAdapter(getActivity(), textLines);
+
+    this.listView.setAdapter(adapter);
   }
 
   /** Load the model and labels. */
@@ -555,7 +595,8 @@ public class Camera2BasicFragment extends Fragment
         public void run() {
           synchronized (lock) {
             if (runClassifier) {
-              classifyFrame();
+              // classifyFrame();
+              System.out.println("PLACEHOLDER");
             }
           }
           backgroundHandler.post(periodicClassify);
@@ -653,16 +694,16 @@ public class Camera2BasicFragment extends Fragment
   }
 
   /** Classifies a frame from the preview stream. */
-  private void classifyFrame() {
+  private String classifyFrame() {
     if (classifier == null || getActivity() == null || cameraDevice == null) {
       showToast("Uninitialized Classifier or invalid context.");
-      return;
+      return null;
     }
     Bitmap bitmap =
         textureView.getBitmap(ImageClassifier.DIM_IMG_SIZE_X, ImageClassifier.DIM_IMG_SIZE_Y);
     String textToShow = classifier.classifyFrame(bitmap);
     bitmap.recycle();
-    showToast(textToShow);
+    return textToShow;
   }
 
   /** Compares two {@code Size}s based on their areas. */

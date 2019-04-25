@@ -16,13 +16,14 @@
 -->
 
 <resources>
-    <string name="app_name">TfLiteCameraDemo</string>
+    <string name="app_name">TensorTrain2</string>
     <string name="intro_message">
         <![CDATA[
         
             
-            This sample demonstrates the basic use of TfLite API. Check the source code to see how
-            you can use TfLite for efficient, on-device inference with trained TensorFlow models.
+            What it do? It's ya boi back at it again. This time I got something special for you guys.
+            You ready? It's TENSORFLOW. Yeah its a little boring but I promise I'll make it worth your
+            while. So take a journey with me, and lets get weird.
             
         
         ]]>

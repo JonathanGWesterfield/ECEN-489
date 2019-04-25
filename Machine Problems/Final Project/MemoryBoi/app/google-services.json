@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "840001790868",
+    "firebase_url": "https://memoryboi.firebaseio.com",
+    "project_id": "memoryboi",
+    "storage_bucket": "memoryboi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:840001790868:android:11dfac13b1acfe41",
+        "android_client_info": {
+          "package_name": "com.memoryboi.jonathanwesterfield.memoryboi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "840001790868-ip89fus2k7k7vli9e5sqhck3kmqfaf3l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.memoryboi.jonathanwesterfield.memoryboi",
+            "certificate_hash": "e31b44880ef903cf01349420f07602c3db7a6472"
+          }
+        },
+        {
+          "client_id": "840001790868-tp2q49625n464p24hv038j26l8ggg47j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAo--KYcaUcWzwQGbpj-GT8738V5Vf1RVI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "840001790868-tp2q49625n464p24hv038j26l8ggg47j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
