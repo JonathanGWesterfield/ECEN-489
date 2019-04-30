@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity
                             Toast.makeText(getApplicationContext(), "Account Creation Successful.", Toast.LENGTH_SHORT)
                                     .show();
                             fUser = mAuth.getCurrentUser();
-                            switchToPullActivity();
+                            switchToMemoriesActivity();
                         }
                         else
                         {
@@ -138,7 +138,7 @@ public class LoginActivity extends AppCompatActivity
                             fUser = mAuth.getCurrentUser();
                             Toast.makeText(getApplicationContext(), "Login Successful.", Toast.LENGTH_SHORT)
                                     .show();
-                            switchToPullActivity();
+                            switchToMemoriesActivity();
                         }
                         else
                         {
@@ -149,9 +149,9 @@ public class LoginActivity extends AppCompatActivity
                 });
     }
 
-    public void switchToPullActivity()
+    public void switchToMemoriesActivity()
     {
-        Intent goPull = new Intent(this, PullActivity.class);
+        Intent goPull = new Intent(this, Memories.class);
         startActivity(goPull);
     }
 }
