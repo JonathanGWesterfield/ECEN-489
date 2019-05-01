@@ -39,6 +39,11 @@ public class Encode
         dbTable = dbRef.child("memories/");
     }
 
+    public ArrayList<MemoryObj> getRetMemoryList()
+    {
+        return this.retMemoryList;
+    }
+
     /**
      * Putting blobs into databases is never a good idea especially with bitmaps
      * so we are going to encode it into a base64 string so it is more stable

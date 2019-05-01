@@ -6,7 +6,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class Memories extends AppCompatActivity
+public class ActivityMemories extends AppCompatActivity
 {
 
     @Override

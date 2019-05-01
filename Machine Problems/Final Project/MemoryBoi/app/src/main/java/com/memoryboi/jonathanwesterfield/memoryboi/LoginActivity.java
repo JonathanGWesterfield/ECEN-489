@@ -151,7 +151,7 @@ public class LoginActivity extends AppCompatActivity
 
     public void switchToMemoriesActivity()
     {
-        Intent goPull = new Intent(this, Memories.class);
+        Intent goPull = new Intent(this, ActivityMemories.class);
         startActivity(goPull);
     }
 }
