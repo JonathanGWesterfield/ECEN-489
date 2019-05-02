@@ -1,18 +1,30 @@
 package com.newsboi.jonathanwesterfield.newsboi;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import android.widget.Toast;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static android.content.Context.MODE_APPEND;
@@ -29,6 +41,11 @@ public class WebButtons extends Fragment
     Button backBtn;
     private NewsObj.Article article;
     private String saveFilePath = "saved_pages.txt";
+    private DatabaseReference dbRef;
+    private DatabaseReference dbTable;
+    private FirebaseDatabase fireDB;
+    private FirebaseAuth mAuth;
+    private FirebaseUser fUser;
 
     public WebButtons() {
         // Required empty public constructor
@@ -45,6 +62,12 @@ public class WebButtons extends Fragment
 
         this.backBtn = (Button) view.findViewById(R.id.backBtn);
         this.setBackBtnListener();
+
+        mAuth = FirebaseAuth.getInstance();
+        fUser = mAuth.getCurrentUser();
+        fireDB = FirebaseDatabase.getInstance();
+        dbRef = fireDB.getReference();
+        dbTable = dbRef.child("locations/");
 
         return view;
     }
@@ -88,6 +111,54 @@ public class WebButtons extends Fragment
         getActivity().finish();
     }
 
+    /**
+     * Push the location to firebase
+     * @param location
+     */
+    public void push(LocationObj location)
+    {
+        DatabaseReference rankey = dbTable.push();
+        rankey.setValue(location, new DatabaseReference.CompletionListener()
+        {
+            @Override
+            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference)
+            {
+                // no error
+                if (databaseError == null)
+                    Toast.makeText(getContext(), "Successful Upload", Toast.LENGTH_SHORT)
+                            .show();
+                else
+                    Toast.makeText(getContext(), "Upload FAILED", Toast.LENGTH_SHORT)
+                            .show();
+            }
+        });
+
+        return;
+    }
+
+    /**
+     * Gets the user's current location
+     * @return location object with the user's location
+     */
+    public LocationObj getLocation()
+    {
+        LocationManager locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (location == null)
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+        double latitude = 0.0, longitude = 0.0;
+
+        if(location != null)
+        {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        }
+
+        return new LocationObj(latitude, longitude);
+    }
+
     public void onSave(View view)
     {
         try
@@ -108,6 +179,10 @@ public class WebButtons extends Fragment
                 out.close();
                 System.out.println("\nSaved Article Object\n");
                 newsPageFrag.showArticleSaved(view);
+                LocationObj location = getLocation();
+                push(location);
+
+
                 // this.alreadySaved = true;
             }
         }

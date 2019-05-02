@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +22,14 @@ public class MemoryList extends Fragment
 {
     private ListView memListView;
     private Encode encode;
-    private ArrayList<MemoryObj> memoryList;
     private MemoryAdapter memAdap;
+
+    private DatabaseReference dbRef;
+    private DatabaseReference dbTable;
+    private FirebaseDatabase fireDB;
+    private FirebaseAuth mAuth;
+    private FirebaseUser fUser;
+    private ArrayList<MemoryObj> retMemoryList;
 
     public MemoryList()
     {
@@ -38,41 +47,65 @@ public class MemoryList extends Fragment
         this.memListView = (ListView) view.findViewById(R.id.memoryListView);
         this.encode = new Encode();
         this.encode.pull();
-        sleepTight(800);
-        this.memoryList = encode.getRetMemoryList();
-        fillListView();
+
+        mAuth = FirebaseAuth.getInstance();
+        fUser = mAuth.getCurrentUser();
+        fireDB = FirebaseDatabase.getInstance();
+        dbRef = fireDB.getReference();
+        dbTable = dbRef.child("memories/");
+
         return view;
     }
 
-    public void fillListView()
+    public void pull()
     {
-        while (this.memoryList == null)
-        {
-            System.out.println("Nothing returned yet. Keep asking");
-            this.memoryList = encode.getRetMemoryList();
-        }
-
-        this.memAdap = new MemoryAdapter(getContext(), this.memoryList);
-        this.memListView.setAdapter(this.memAdap);
+        Query query = dbTable.orderByKey();
+        query.addListenerForSingleValueEvent(getValueEventListener());
     }
 
     /**
-     * This is used to make the sure that we returned our results from the database. While it
-     * is super terrible practice to wait for a set a a wait time instead of actually making sure
-     * the results were returned, I just want to finish the project and be done
-     * @param time
+     * Event listener for both queries. Since it just fills up the GradeObj arraylist,
+     * can be used for both query 1 and 2.
+     * @return
      */
-    public void sleepTight(long time)
+    public ValueEventListener getValueEventListener()
     {
-        try
+        ValueEventListener valueEventListener = new ValueEventListener()
         {
-            Thread.sleep(time);
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        }
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if (dataSnapshot.exists())
+                {
+                    // clear the arraylist to refill it
+                    retMemoryList = new ArrayList<>();
+                    //Toast.makeText(getApplicationContext(),"listening",Toast.LENGTH_SHORT).show();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                    {
+                        MemoryObj memory = snapshot.getValue(MemoryObj.class);
+
+                        retMemoryList.add(memory);
+                    }
+                    System.out.println("Query Finished");
+
+                    fillMemoryList();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError)
+            {
+                System.out.println("ERROR: query failed");
+            }
+        };
+
+        return valueEventListener;
+    }
+
+    public void fillMemoryList()
+    {
+        memAdap = new MemoryAdapter(getContext(), this.retMemoryList);
+        this.memListView.setAdapter(memAdap);
     }
 
 

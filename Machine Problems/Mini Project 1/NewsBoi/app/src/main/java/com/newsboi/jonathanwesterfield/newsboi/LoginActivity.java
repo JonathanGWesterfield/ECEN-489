@@ -1,4 +1,4 @@
-package com.memoryboi.jonathanwesterfield.memoryboi;
+package com.newsboi.jonathanwesterfield.newsboi;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -153,7 +153,7 @@ public class LoginActivity extends AppCompatActivity
 
     public void switchToMainActivity()
     {
-        Intent goPull = new Intent(this, ActivityMemories.class);
+        Intent goPull = new Intent(this, MainActivity.class);
         startActivity(goPull);
     }
 }
