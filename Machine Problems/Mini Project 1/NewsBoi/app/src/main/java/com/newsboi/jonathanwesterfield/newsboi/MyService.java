@@ -1,14 +1,18 @@
 package com.newsboi.jonathanwesterfield.newsboi;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,6 +33,7 @@ public class MyService extends Service
     private FirebaseDatabase fireDB;
     private FirebaseAuth mAuth;
     private FirebaseUser fUser;
+    private int inc = 0;
 
     public MyService()
     {
@@ -42,6 +47,8 @@ public class MyService extends Service
     /**
      * Will constantly update our locations list and then will constantly go through the list of
      * locations we get back from the database to check and see if we are near a past location.
+     * If we get a match, we sent a notification and then sleep for 10 minutes so we don't bother
+     * the user (assuming they sat down to read their saved articles)
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int id)
@@ -53,24 +60,28 @@ public class MyService extends Service
             {
                 // Initialize to avoid NullPtrExceptions
                 locations = new ArrayList<>();
-                getLocations();
 
                 while(true)
                 {
                     try
                     {
+                        getLocations();
                         double coordinates[] = getLocation();
 
                         LocationObj currentLocation = new LocationObj(coordinates[0], coordinates[1], "Current Location");
 
-
-
                         LocationObj matchLocation = checkLocations(currentLocation);
                         if (matchLocation != null)
+                        {
                             sendNotification(matchLocation);
+                            // Sleep for 10 minutes then check back in since we don't want to bother them
+                            Thread.sleep(600000);
+                        }
+                        else
+                            Thread.sleep(5000); // Check in every 5 seconds
 
-                        // Sleep for a minute then check back in
-                        Thread.sleep(6000);
+                        matchLocation = null;
+
                     }
                     catch(InterruptedException e)
                     {
@@ -127,18 +138,53 @@ public class MyService extends Service
 
         String ticker = "Don't forget!";
 
-        Notification.Builder builder = new Notification.Builder(this)
-                .setContentTitle("You've Returned")
-                .setContentText(text)
-                .setAutoCancel(true)
-                .setLargeIcon(bmp)
-                .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark_focused)
-                .setTicker(ticker);
+        NotificationManager notificationManager = (NotificationManager)
+                this.getSystemService(this.NOTIFICATION_SERVICE);
 
-        Notification notification = builder.build();
+        NotificationCompat.Builder builder;
 
-        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(3000, notification);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            String channel_id = "3000";
+            CharSequence name = "Channel Name";
+            String description = "NewsBoi Notification";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+
+            NotificationChannel mChannel = new NotificationChannel(channel_id, name, importance);
+            mChannel.setDescription(description);
+            mChannel.enableLights(true);
+            mChannel.setLightColor(Color.BLUE);
+
+
+            notificationManager.createNotificationChannel(mChannel);
+
+            builder = new NotificationCompat.Builder(this, channel_id)
+                    .setContentTitle("You've Returned")
+                    .setContentText(text)
+                    .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
+                    .setContentIntent(null)
+                    .setAutoCancel(true)
+                    .setLargeIcon(bmp)
+                    .setTicker(ticker);
+
+            Notification notification = builder.build();
+
+            //        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(0, notification);
+        }
+        else
+            builder = new NotificationCompat.Builder(this);
+
+
+
+
+
+        return;
+    }
+
+    synchronized int getInc()
+    {
+        return ++inc;
     }
 
     /**
