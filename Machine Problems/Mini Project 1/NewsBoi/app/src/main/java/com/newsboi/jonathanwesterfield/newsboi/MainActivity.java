@@ -38,5 +38,10 @@ public class MainActivity extends AppCompatActivity {
         {
             setContentView(R.layout.activity_main);
         }
+
+        // get the locations from the database
+        Intent intent = new Intent(this, MyService.class);
+        intent.setAction("fucking do it");
+        startService(intent);
     }
 }

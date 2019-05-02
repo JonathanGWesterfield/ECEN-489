@@ -14,6 +14,14 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <service
+                android:name=".MyService"
+                android:enabled="true"
+                android:exported="true">
+        </service>
+
+        <activity android:name=".ViewImage">
+        </activity>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -25,9 +33,10 @@
         </activity>
         <activity android:name=".NewsLookActivity"/>
         <activity android:name=".ViewSavedArticles"/>
+
         <meta-data
                 android:name="com.google.android.geo.API_KEY"
-                android:value="AIzaSyC91XlC5sVsDn49Ib5N22hIXvw6J7uKjvU" />
+                android:value="AIzaSyC91XlC5sVsDn49Ib5N22hIXvw6J7uKjvU"/>
     </application>
 
 </manifest>
