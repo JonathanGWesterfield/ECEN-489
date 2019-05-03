@@ -65,7 +65,7 @@ public class NewsPage extends Fragment
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Article Already Saved").
-                setMessage("You have already saved this article.")
+                setMessage("You have already saved this article and location.")
                 .setNeutralButton("OK", null);;
 
         // Create the AlertDialog
@@ -77,7 +77,7 @@ public class NewsPage extends Fragment
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Article Saved").
-                setMessage("You have saved this article for future reading.")
+                setMessage("You have saved this article and location for future reading.")
                 .setNeutralButton("OK", null);;
 
         // Create the AlertDialog
